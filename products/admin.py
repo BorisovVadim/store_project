@@ -21,7 +21,8 @@ class ProductAdmin(admin.ModelAdmin):
 
 class BasketAdmin(admin.TabularInline):
     """Класс для отображения всех корзин с
-    продуктами для пользователя в админке User
+    продуктами для пользователя в админке User,
+    является частью админки User
     """
 
     model = Basket
