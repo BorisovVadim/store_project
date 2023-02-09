@@ -1,6 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.core.paginator import Paginator
-from django.shortcuts import render, HttpResponseRedirect
+from django.shortcuts import HttpResponseRedirect
 from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
 
@@ -19,11 +18,6 @@ class IndexView(TemplateView):
         context = super().get_context_data()
         context['title'] = 'Store'
         return context
-
-
-# def index(request):
-#     context = {'title': 'Store'}
-#     return render(request, 'products/index.html', context)
 
 
 class ProductsListViews(ListView):
@@ -51,26 +45,6 @@ class ProductsListViews(ListView):
         context['title'] = 'Store - Каталог'
         context['categories'] = ProductCategory.objects.all()
         return context
-
-
-# def products(request, category_id=None, page_number=1):
-#     """
-#     Контроллер для отображения всех продуктов или для отображения
-#     товаров определенных отфильтрованных по категории продуктов
-#     """
-#
-#     products = Product.objects.filter(
-#         category_id=category_id) if category_id else Product.objects.all()
-#
-#     paginator = Paginator(products, PER_PAGE)
-#     products_paginator = paginator.page(page_number)
-#
-#     context = {
-#         'title': 'Store - Каталог',
-#         'categories': ProductCategory.objects.all(),
-#         'products': products_paginator
-#     }
-#     return render(request, 'products/products.html', context)
 
 
 @login_required
