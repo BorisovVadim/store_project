@@ -1,6 +1,5 @@
-from django.contrib import auth, messages
-from django.shortcuts import render, HttpResponseRedirect
-from django.urls import reverse, reverse_lazy
+from django.contrib.auth.views import LoginView
+from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView, UpdateView
 
 from users.forms import UserLoginForm, UserRegistrationForm, UserProfileForm
@@ -8,20 +7,13 @@ from users.models import User
 from products.models import Basket
 
 
-def login(request):
-    if request.method == 'POST':
-        form = UserLoginForm(data=request.POST)
-        if form.is_valid():
-            username = request.POST['username']
-            password = request.POST['password']
-            user = auth.authenticate(username=username, password=password)
-            if user:
-                auth.login(request, user)
-                return HttpResponseRedirect(reverse('index'))
-    else:
-        form = UserLoginForm()
-    context = {'form': form}
-    return render(request, 'users/login.html', context)
+class UserLoginView(LoginView):
+    """CBV для логина пользователя. Используется
+    модель User, прописанная в settings.py
+    """
+
+    template_name = 'users/login.html'
+    form_class = UserLoginForm
 
 
 class UserRegistrationView(CreateView):
@@ -70,7 +62,6 @@ class UserProfileView(UpdateView):
         # self.object альтернатива self.request.user
         return context
 
-
 # @login_required
 # def profile(request):
 #     """
@@ -101,13 +92,3 @@ class UserProfileView(UpdateView):
 #         'baskets': baskets,
 #     }
 #     return render(request, 'users/profile.html', context)
-
-
-def logout(request):
-    """
-    Контроллер для выхода пользователя из системы.
-    Возвращает пользователя на главную страницу.
-    """
-
-    auth.logout(request)
-    return HttpResponseRedirect(reverse('index'))

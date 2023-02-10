@@ -130,6 +130,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'users.User'  # Переопределяем модель для работы
 # с пользователями
+
 LOGIN_URL = '/users/login/'  # Переменная для декоратора @login_required,
 # перенаправляет пользователя на страницу логина, если он не авторизирован
+
+LOGIN_REDIRECT_URL = '/'  # Перенаправляет на главную страницу при логине
+
+LOGOUT_REDIRECT_URL = '/'  # Перенаправляет на главную страницу при логауте
 
