@@ -4,28 +4,25 @@ from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
 
 from .models import ProductCategory, Product, Basket
+from common.views import TitleMixin
 
 PER_PAGE = 3
 
 
-class IndexView(TemplateView):
+class IndexView(TitleMixin, TemplateView):
     """CBV для отображения шаблона домашней страницы"""
 
     template_name = 'products/index.html'
-
-    def get_context_data(self, **kwargs):
-        """Метод возвращает словарь для использования в шаблоне"""
-        context = super().get_context_data()
-        context['title'] = 'Store'
-        return context
+    title = 'Store'  # Присваиваем переменной TitleMixin.title значение
 
 
-class ProductsListViews(ListView):
+class ProductsListViews(TitleMixin, ListView):
     """CBV для отображения шаблона со списком всех доступных продуктов"""
 
     model = Product
     template_name = 'products/products.html'
     paginate_by = PER_PAGE
+    title = 'Store - Каталог'
 
     def get_queryset(self):
         """Переопределяем метод. Если category_id == None, возвращает
@@ -42,7 +39,6 @@ class ProductsListViews(ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data()
-        context['title'] = 'Store - Каталог'
         context['categories'] = ProductCategory.objects.all()
         return context
 
