@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import User
+from .models import User, EmailVerification
 from products.admin import BasketAdmin
 
 
@@ -15,3 +15,10 @@ class UserAdmin(admin.ModelAdmin):
     inlines = (BasketAdmin,)  # Добавляем отображение в админке в User всех
     # корзин, выбранных для пользователя
 
+
+@admin.register(EmailVerification)
+class EmailVerificationAdmin(admin.ModelAdmin):
+    """Класс для отображения верификации почты пользователя в админке"""
+    list_display = ('code', 'user', 'expiration')
+    fields = ('code', 'user', 'expiration', 'created')
+    readonly_fields = ('created',)

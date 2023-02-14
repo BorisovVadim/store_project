@@ -138,3 +138,6 @@ LOGIN_REDIRECT_URL = '/'  # Перенаправляет на главную с�
 
 LOGOUT_REDIRECT_URL = '/'  # Перенаправляет на главную страницу при логауте
 
+# Sending emails
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
