@@ -32,7 +32,7 @@ class UserRegistrationForm(UserCreationForm):
     }))
     last_name = forms.CharField(widget=forms.TextInput(attrs={
         'class': 'form-control py-4',
-        'placeholder': 'фамилию имя',
+        'placeholder': 'Введите фамилию',
     }))
     username = forms.CharField(widget=forms.TextInput(attrs={
         'class': 'form-control py-4',
