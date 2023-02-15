@@ -145,5 +145,5 @@ LOGOUT_REDIRECT_URL = '/'  # Перенаправляет на главную с
 EMAIL_HOST = 'smtp.yandex.com'
 EMAIL_PORT = 465
 EMAIL_HOST_USER = 'myrabochiyakkaunt@yandex.ru'
-EMAIL_HOST_PASSWORD = 'my-rabochiy-akkaunt'
+EMAIL_HOST_PASSWORD = 'хихи'
 EMAIL_USE_SSL = True
