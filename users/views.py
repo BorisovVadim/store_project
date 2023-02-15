@@ -1,14 +1,13 @@
 from django.contrib.auth.views import LoginView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import HttpResponseRedirect
-from django.urls import reverse_lazy, reverse
-from django.views.generic.edit import CreateView, UpdateView
+from django.urls import reverse, reverse_lazy
 from django.views.generic.base import TemplateView
+from django.views.generic.edit import CreateView, UpdateView
 
 from common.views import TitleMixin
-from products.models import Basket
-from users.forms import UserLoginForm, UserRegistrationForm, UserProfileForm
-from users.models import User, EmailVerification
+from users.forms import UserLoginForm, UserProfileForm, UserRegistrationForm
+from users.models import EmailVerification, User
 
 
 class UserLoginView(TitleMixin, LoginView):
@@ -59,8 +58,7 @@ class EmailVerificationView(TitleMixin, TemplateView):
         email_verifications = EmailVerification.objects.filter(user=user,
                                                                code=code)
 
-        if email_verifications.exists() \
-                and not email_verifications.first().is_expired():
+        if email_verifications.exists() and not email_verifications.first().is_expired():
             user.is_verified_email = True
             user.save()
             return super().get(request, *args, **kwargs)

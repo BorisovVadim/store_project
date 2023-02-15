@@ -3,8 +3,9 @@ from django.shortcuts import HttpResponseRedirect
 from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
 
-from .models import ProductCategory, Product, Basket
 from common.views import TitleMixin
+
+from .models import Basket, Product, ProductCategory
 
 PER_PAGE = 3
 

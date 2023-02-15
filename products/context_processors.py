@@ -2,8 +2,8 @@ from products.models import Basket
 
 
 def baskets(request) -> dict['baskets': Basket]:
-    """Данный контекстный процессор позволяет пользоваться переменной baskets
-    глобально; подключается в настройках в переменной TEMPLATES
+    """Данный контекстный процессор позволяет пользоваться переменной
+    baskets глобально; подключается в настройках в переменной TEMPLATES
     """
 
     user = request.user
