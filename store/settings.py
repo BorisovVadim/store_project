@@ -169,7 +169,7 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
-SITE_ID = 1
+SITE_ID = 1  # github в админке в таблице Сайты
 
 # Provider specific settings for github
 SOCIALACCOUNT_PROVIDERS = {
