@@ -38,6 +38,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
+    'django.contrib.sites',
+
+    # apps for allauth
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.github',  # provider for auth with github
 
     'products',
     'users',
@@ -63,11 +70,10 @@ TEMPLATES = [
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
-                'django.template.context_processors.request',
+                'django.template.context_processors.request',  # процессор необходим для django allauth
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'products.context_processors.baskets',
-                # подключили свой контекстный процессор baskets
+                'products.context_processors.baskets',  # подключили свой контекстный процессор baskets
             ],
         },
     },
@@ -148,8 +154,28 @@ LOGOUT_REDIRECT_URL = '/'  # Перенаправляет на главную с
 
 # Sending emails
 
-EMAIL_HOST = 'smtp.yandex.com'
-EMAIL_PORT = 465
-EMAIL_HOST_USER = 'myrabochiyakkaunt@yandex.ru'
-EMAIL_HOST_PASSWORD = 'хихи'
+# EMAIL_HOST = 'smtp.yandex.com'
+# EMAIL_PORT = 465
+# EMAIL_HOST_USER = 'myrabochiyakkaunt@yandex.ru'
+# EMAIL_HOST_PASSWORD = 'хихи'
 EMAIL_USE_SSL = True
+
+# OAuth
+
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+SITE_ID = 1
+
+# Provider specific settings for github
+SOCIALACCOUNT_PROVIDERS = {
+    'github': {
+        'SCOPE': [
+            'user',
+        ],
+    }
+}
