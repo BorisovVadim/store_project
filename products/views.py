@@ -73,7 +73,6 @@ def basket_add(request, product_id):
 def basket_remove(request, basket_id):
     """Контроллер для удаления продуктов с корзины"""
 
-    basket = Basket.objects.get(id=basket_id)  # Присваиваем переменной
-    # basket продукт в корзине по id
+    basket = Basket.objects.get(id=basket_id)  # Присваиваем переменной basket продукт в корзине по id
     basket.delete()
     return HttpResponseRedirect(request.META['HTTP_REFERER'])
