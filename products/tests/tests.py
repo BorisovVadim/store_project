@@ -3,8 +3,11 @@ from http import HTTPStatus
 from django.test import TestCase
 from django.urls import reverse
 
+from products.models import Product, ProductCategory
+
 
 class IndexViewTestCase(TestCase):
+    """Класс для тестирования IndexView"""
 
     def test_view(self):
         path = reverse('index')
@@ -13,3 +16,38 @@ class IndexViewTestCase(TestCase):
         self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertEqual(response.context_data['title'], 'Store')
         self.assertTemplateUsed(response, 'products/index.html')
+
+
+class ProductsListViewTestCase(TestCase):
+    """Класс для тестирования ProductsListViews"""
+    fixtures = ['categories.json', 'goods.json']  # при создании тестовая бд будет заполняться данными фикстурами
+
+    def setUp(self):
+        """Метод для объявления переменной products, для сохранения принципа DRY"""
+        self.products = Product.objects.all()
+
+    def _common_tests(self, response):
+        """Внутриклассовый метод для проверки статуса ответа, заголовка и шаблона"""
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+        self.assertEqual(response.context_data['title'], 'Store - Каталог')
+        self.assertTemplateUsed(response, 'products/products.html')
+
+    def test_list(self):
+        path = reverse('products:index')
+        response = self.client.get(path)
+
+        self._common_tests(response)
+        self.assertEqual(list(response.context_data['object_list']), list(self.products[:3]))  # приводим два QuarrySet
+        # к спискам, чтобы сравнение проходило, у products берем первые три объекта, потому что на странице отображаются
+        # по три продукта, поделенные пагинатором
+
+    def test_list_with_category(self):
+        category = ProductCategory.objects.first()
+        path = reverse('products:category', kwargs={'category_id': category.id})
+        response = self.client.get(path)
+
+        self._common_tests(response)
+        self.assertEqual(
+            list(response.context_data['object_list']),
+            list(self.products.filter(category_id=category.id))
+        )

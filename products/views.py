@@ -17,7 +17,7 @@ class IndexView(TitleMixin, TemplateView):
     title = 'Store'  # Присваиваем переменной TitleMixin.title значение
 
 
-class ProductsListViews(TitleMixin, ListView):
+class ProductsListView(TitleMixin, ListView):
     """CBV для отображения шаблона со списком всех доступных продуктов"""
 
     model = Product
